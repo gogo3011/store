@@ -1,5 +1,6 @@
 package uni.store.Services;
 
+import uni.store.Entities.CartItem;
 import uni.store.Entities.Product;
 import uni.store.Entities.Store;
 import uni.store.Utils.Exceptions.ProductExpiredException;
@@ -21,5 +22,10 @@ public class PriceCalculator {
         if(daysTillExpiration < store.getDaysTillExpirationDiscount())
             price -= price * store.getPercentExpirationDiscount();
         return price;
+    }
+
+    public static double calculateSellPrice(CartItem item, Store store) throws ProductExpiredException {
+        double price = calculateSellPrice(item.getProduct(), store);
+        return price * item.getQty();
     }
 }

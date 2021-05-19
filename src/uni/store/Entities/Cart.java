@@ -4,29 +4,31 @@ import uni.store.Services.PriceCalculator;
 import uni.store.Utils.Exceptions.NoMoreQtyException;
 import uni.store.Utils.Exceptions.ProductExpiredException;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Cart {
     private Client owner;
     private Store store;
-    private ArrayList<Product> products;
+    private HashMap<CartItem, CartItem> cartItems;
 
     public Cart(Client owner, Store store) {
         this.owner = owner;
         this.store = store;
+        cartItems = new HashMap<>();
     }
 
-    public void addProductToCart(Product product){
-        try {
-            product.reduceQty();
-            products.add(product);
-        } catch (NoMoreQtyException e) {
-            e.printStackTrace();
+    public void addProductToCart(Product product) throws NoMoreQtyException{
+        CartItem item = new CartItem(product);
+        CartItem el = cartItems.get(item);
+        if (el != null) {
+            el.increaseQty();
+        } else {
+            cartItems.put(item, item);
         }
     }
 
-    public ArrayList<Product> getProducts() {
-        return products;
+    public HashMap<CartItem, CartItem> getCartItems() {
+        return cartItems;
     }
 
     public Client getOwner() {
@@ -37,15 +39,15 @@ public class Cart {
         return store;
     }
 
-    public double calculateTotal(){
-        double total = 0.0;
-        for (Product p: products) {
-            try{
-                total += PriceCalculator.calculateSellPrice(p, store);
+    public double calculateTotal() {
+        return cartItems.values().stream().map(cartItem -> {
+            double sum = 0.0;
+            try {
+                sum = PriceCalculator.calculateSellPrice(cartItem, store);
             } catch (ProductExpiredException e) {
                 e.printStackTrace();
             }
-        }
-        return total;
+            return sum;
+        }).reduce(0.0, Double::sum);
     }
 }

@@ -3,6 +3,7 @@ package uni.store.Entities;
 import uni.store.Utils.Exceptions.NoMoreQtyException;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Product {
     private int id;
@@ -33,6 +34,13 @@ public class Product {
     public void reduceQty() throws NoMoreQtyException {
         if(qty > 0)
             qty--;
+        else
+            throw new NoMoreQtyException(this);
+    }
+
+    public void reduceQty(int qtyToReduce) throws NoMoreQtyException {
+        if(qty - qtyToReduce > 0)
+            qty -= qtyToReduce;
         else
             throw new NoMoreQtyException(this);
     }
@@ -87,6 +95,11 @@ public class Product {
 
         final Product cmp = (Product) obj;
         return (this.id == cmp.id) && this.name.equals(cmp.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, pricePerPs);
     }
 
 }
