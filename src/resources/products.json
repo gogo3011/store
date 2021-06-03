@@ -1,0 +1,26 @@
+{
+  "products": [{
+    "id": 1,
+    "name": "Pizza",
+    "pricePerPs": 5.0,
+    "qty": 10,
+    "productType": "EDIBLE",
+    "expireDate": 1653648005
+    },
+    {
+      "id": 2,
+      "name": "Fanta",
+      "pricePerPs": 1.2,
+      "qty": 10,
+      "productType": "EDIBLE",
+      "expireDate": 1653648005
+    },
+    {
+      "id": 3,
+      "name": "Broom",
+      "pricePerPs": 10.0,
+      "qty": 10,
+      "productType": "NOT_EDIBLE",
+      "expireDate": 1653648005
+    }]
+}

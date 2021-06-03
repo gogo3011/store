@@ -4,6 +4,7 @@ import uni.store.Entities.CartItem;
 import uni.store.Entities.Product;
 import uni.store.Entities.Store;
 import uni.store.Utils.Exceptions.ProductExpiredException;
+import uni.store.Utils.MathUtils;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -21,7 +22,7 @@ public class PriceCalculator {
             throw new ProductExpiredException(product, daysTillExpiration);
         if(daysTillExpiration < store.getDaysTillExpirationDiscount())
             price -= price * store.getPercentExpirationDiscount();
-        return price;
+        return MathUtils.round(price,2);
     }
 
     public static double calculateSellPrice(CartItem item, Store store) throws ProductExpiredException {

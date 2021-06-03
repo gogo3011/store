@@ -18,7 +18,7 @@ public class Cart {
     }
 
     public void addProductToCart(Product product) throws NoMoreQtyException{
-        CartItem item = new CartItem(product);
+        CartItem item = new CartItem(product, store);
         CartItem el = cartItems.get(item);
         if (el != null) {
             el.increaseQty();

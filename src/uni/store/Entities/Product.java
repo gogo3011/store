@@ -1,5 +1,6 @@
 package uni.store.Entities;
 
+import uni.store.Services.PriceCalculator;
 import uni.store.Utils.Exceptions.NoMoreQtyException;
 
 import java.time.LocalDate;
@@ -100,6 +101,11 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, pricePerPs);
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + qty;
     }
 
 }

@@ -1,20 +1,22 @@
 package uni.store.Entities;
 
 import uni.store.Utils.Exceptions.NoMoreQtyException;
-
-import java.util.Objects;
+import uni.store.Services.PriceCalculator;
+import uni.store.Utils.Exceptions.ProductExpiredException;
 
 public class CartItem{
     final private Product product;
-    private int qty;
+    final private Store store;
+    private int qty = 0;
 
-    public CartItem(Product product) throws NoMoreQtyException{
+    public CartItem(Product product, Store store) throws NoMoreQtyException{
         this.product = product;
-        this.product.reduceQty();
+        this.store = store;
+        increaseQty();
     }
 
-    public CartItem(Product product, int qty) throws NoMoreQtyException{
-        this(product);
+    public CartItem(Product product, Store store, int qty) throws NoMoreQtyException{
+        this(product, store);
         setQty(qty);
     }
 
@@ -61,6 +63,11 @@ public class CartItem{
 
     @Override
     public String toString() {
-        return product.getName() + "      x" + qty;
+        try {
+            return product.getName() + "      x" + qty + " = " + qty * PriceCalculator.calculateSellPrice(product, store);
+        } catch (ProductExpiredException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

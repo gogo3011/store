@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group 'uni.store'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+dependencies {
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
