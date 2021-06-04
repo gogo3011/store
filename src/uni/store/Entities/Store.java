@@ -1,5 +1,7 @@
 package uni.store.Entities;
 
+import uni.store.Services.PriceCalculatorAbstract;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class Store {
     private double percentMarkupNonEdible;
     private int daysTillExpirationDiscount;
     private double percentExpirationDiscount;
+    private PriceCalculatorAbstract priceCalculatorAbstract;
 
-    public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount, List<Product> products, List<Employee> employees, List<CashRegister> cashRegisters) {
+    public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount, List<Product> products, List<Employee> employees,
+                 List<CashRegister> cashRegisters, PriceCalculatorAbstract priceCalculatorAbstract) {
         this.storeName = storeName;
         this.percentMarkupEdible = percentMarkupEdible;
         this.percentMarkupNonEdible = percentMarkupNonEdible;
@@ -26,11 +30,12 @@ public class Store {
         this.cashRegisters = cashRegisters;
         this.soldCarts = new ArrayList<Cart>();
         this.receipts = new ArrayList<Receipt>();
+        this.priceCalculatorAbstract = priceCalculatorAbstract;
     }
 
-    public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount) {
+    public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount, PriceCalculatorAbstract priceCalculatorAbstract) {
         this(storeName, percentMarkupEdible, percentMarkupNonEdible, daysTillExpirationDiscount, percentExpirationDiscount,
-                new ArrayList<Product>(), new ArrayList<Employee>(), new ArrayList<CashRegister>());
+                new ArrayList<Product>(), new ArrayList<Employee>(), new ArrayList<CashRegister>(), priceCalculatorAbstract);
     }
 
     public double getPercentMarkupNonEdible() {
@@ -108,7 +113,7 @@ public class Store {
 
     public void makeASale(Cart cart){
         CashRegisterThread crt = new CashRegisterThread(cashRegisters.get(0), cart);
-        crt.run();
+        crt.start();
         soldCarts.add(cart);
         receipts.add(new Receipt(cart, cashRegisters.get(0)));
     }
@@ -123,5 +128,9 @@ public class Store {
 
     public ArrayList<Product> getProducts(){
         return new ArrayList<Product>(products);
+    }
+
+    public PriceCalculatorAbstract getPriceCalculator() {
+        return priceCalculatorAbstract;
     }
 }

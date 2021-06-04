@@ -11,8 +11,7 @@ public class AIClient extends Client{
     }
 
     public void pickAProduct() {
-        for (int i = 0; i < 1 + getRandomInt(4); i++) {
-
+        for (int i = 0; i < 1 + getRandomInt(3); i++) {
             List<Product> productsAvailable = getStore().getProducts();
             int max = productsAvailable.size();
             for (int count = 0; count < 3; count++) {

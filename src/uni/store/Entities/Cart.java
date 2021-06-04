@@ -1,6 +1,5 @@
 package uni.store.Entities;
 
-import uni.store.Services.PriceCalculator;
 import uni.store.Utils.Exceptions.NoMoreQtyException;
 import uni.store.Utils.Exceptions.ProductExpiredException;
 
@@ -43,7 +42,7 @@ public class Cart {
         return cartItems.values().stream().map(cartItem -> {
             double sum = 0.0;
             try {
-                sum = PriceCalculator.calculateSellPrice(cartItem, store);
+                sum = store.getPriceCalculator().calculateSellPrice(cartItem, store);
             } catch (ProductExpiredException e) {
                 e.printStackTrace();
             }

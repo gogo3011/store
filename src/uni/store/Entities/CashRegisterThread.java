@@ -12,8 +12,5 @@ public class CashRegisterThread extends Thread{
     @Override
     public void run() {
         System.out.println(register.makePurchase(cart));
-        for (int i = 0; i < 5; i++) {
-            System.out.println(i);
-        }
     }
 }

@@ -9,9 +9,9 @@ import uni.store.Utils.MathUtils;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class PriceCalculator {
-    private PriceCalculator(){}
-    public static double calculateSellPrice(Product product, Store store) throws ProductExpiredException{
+public class PriceCalculatorImpl extends PriceCalculatorAbstract{
+    public PriceCalculatorImpl(){}
+    public double calculateSellPrice(Product product, Store store) throws ProductExpiredException{
         double price = product.getPricePerPs();
         switch (product.getProductType()){
             case EDIBLE -> price += price * store.getPercentMarkupEdible();
@@ -25,7 +25,7 @@ public class PriceCalculator {
         return MathUtils.round(price,2);
     }
 
-    public static double calculateSellPrice(CartItem item, Store store) throws ProductExpiredException {
+    public double calculateSellPrice(CartItem item, Store store) throws ProductExpiredException {
         double price = calculateSellPrice(item.getProduct(), store);
         return price * item.getQty();
     }

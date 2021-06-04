@@ -1,6 +1,5 @@
 package uni.store.Entities;
 
-import uni.store.Services.PriceCalculator;
 import uni.store.Utils.Exceptions.NoMoreQtyException;
 
 import java.time.LocalDate;
