@@ -16,12 +16,12 @@ public class BuyStoreSim {
         store.addProducts(ProductFactory.generateProductsFromJSON());
         store.addCashier(new Cashier(1, "Nithin", 200.0));
         store.addCashier(new Cashier(2, "Donka", 500.0));
-        List<AIClient> clients = new ArrayList<AIClient>();
+        List<AIClient> clients = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             clients.add(new AIClient(200.0, store));
         }
-        clients.parallelStream().forEach(AIClient::pickAProduct);
-        clients.parallelStream().forEach(store::makeASale);
+        clients.forEach(AIClient::pickAProduct);
+        clients.forEach(store::makeASale);
         store.getReceipts().forEach(System.out::println);
         System.out.println(store.calculateAllSalaries());
     }

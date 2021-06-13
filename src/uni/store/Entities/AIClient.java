@@ -1,9 +1,9 @@
 package uni.store.Entities;
 
 import uni.store.Utils.Exceptions.NoMoreQtyException;
+import uni.store.Utils.MathUtils;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class AIClient extends Client{
     public AIClient(double balance, Store store) {
@@ -11,12 +11,12 @@ public class AIClient extends Client{
     }
 
     public void pickAProduct() {
-        for (int i = 0; i < 1 + getRandomInt(3); i++) {
+        for (int i = 0; i < 1 + MathUtils.getRandomInt(3); i++) {
             List<Product> productsAvailable = getStore().getProducts();
             int max = productsAvailable.size();
             for (int count = 0; count < 3; count++) {
                 try {
-                    Product product = productsAvailable.get(getRandomInt(max));
+                    Product product = productsAvailable.get(MathUtils.getRandomInt(max));
                     addToCart(product);
                     break;
                 } catch (NoMoreQtyException ignored) {
@@ -24,9 +24,5 @@ public class AIClient extends Client{
                 }
             }
         }
-    }
-
-    private static int getRandomInt(int max){
-        return ThreadLocalRandom.current().nextInt(0, max);
     }
 }

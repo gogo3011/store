@@ -1,6 +1,7 @@
 package uni.store.Entities;
 
 import uni.store.Services.PriceCalculatorAbstract;
+import uni.store.Utils.MathUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Store {
     private double percentMarkupNonEdible;
     private int daysTillExpirationDiscount;
     private double percentExpirationDiscount;
-    private PriceCalculatorAbstract priceCalculatorAbstract;
+    private final PriceCalculatorAbstract priceCalculatorAbstract;
 
     public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount, List<Product> products, List<Employee> employees,
                  List<CashRegister> cashRegisters, PriceCalculatorAbstract priceCalculatorAbstract) {
@@ -28,14 +29,14 @@ public class Store {
         this.products = products;
         this.employees = employees;
         this.cashRegisters = cashRegisters;
-        this.soldCarts = new ArrayList<Cart>();
-        this.receipts = new ArrayList<Receipt>();
+        this.soldCarts = new ArrayList<>();
+        this.receipts = new ArrayList<>();
         this.priceCalculatorAbstract = priceCalculatorAbstract;
     }
 
     public Store(String storeName, double percentMarkupEdible, double percentMarkupNonEdible, int daysTillExpirationDiscount, double percentExpirationDiscount, PriceCalculatorAbstract priceCalculatorAbstract) {
         this(storeName, percentMarkupEdible, percentMarkupNonEdible, daysTillExpirationDiscount, percentExpirationDiscount,
-                new ArrayList<Product>(), new ArrayList<Employee>(), new ArrayList<CashRegister>(), priceCalculatorAbstract);
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), priceCalculatorAbstract);
     }
 
     public double getPercentMarkupNonEdible() {
@@ -112,7 +113,7 @@ public class Store {
     }
 
     public void makeASale(Cart cart){
-        CashRegisterThread crt = new CashRegisterThread(cashRegisters.get(0), cart);
+        CashRegisterThread crt = new CashRegisterThread(cashRegisters.get(MathUtils.getRandomInt(cashRegisters.size())), cart);
         crt.start();
         soldCarts.add(cart);
         receipts.add(new Receipt(cart, cashRegisters.get(0)));
@@ -127,7 +128,7 @@ public class Store {
     }
 
     public ArrayList<Product> getProducts(){
-        return new ArrayList<Product>(products);
+        return new ArrayList<>(products);
     }
 
     public PriceCalculatorAbstract getPriceCalculator() {

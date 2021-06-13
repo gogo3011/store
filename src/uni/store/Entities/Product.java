@@ -31,14 +31,14 @@ public class Product {
             this.qty = qty;
     }
 
-    public void reduceQty() throws NoMoreQtyException {
+    public synchronized void reduceQty() throws NoMoreQtyException {
         if(qty > 0)
             qty--;
         else
             throw new NoMoreQtyException(this);
     }
 
-    public void reduceQty(int qtyToReduce) throws NoMoreQtyException {
+    public synchronized void reduceQty(int qtyToReduce) throws NoMoreQtyException {
         if(qty - qtyToReduce > 0)
             qty -= qtyToReduce;
         else
