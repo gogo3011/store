@@ -3,6 +3,7 @@ package uni.store;
 import uni.store.Entities.*;
 import uni.store.Services.PriceCalculatorImpl;
 import uni.store.Services.PriceCalculatorAbstract;
+import uni.store.Utils.FileHelper;
 import uni.store.Utils.ProductFactory;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class BuyStoreSim {
         clients.forEach(AIClient::pickAProduct);
         clients.forEach(store::makeASale);
         store.getReceipts().forEach(System.out::println);
+        store.getReceipts().forEach(FileHelper::writeToFile);
         System.out.println(store.calculateAllSalaries());
     }
 }

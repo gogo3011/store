@@ -5,6 +5,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -60,6 +63,17 @@ public class FileHelper {
             ex.printStackTrace();
         }
         return jsonObject;
+    }
+
+    public static void writeToFile(Serializable obj) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("D://temp.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(obj);
+            objectOut.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
 
